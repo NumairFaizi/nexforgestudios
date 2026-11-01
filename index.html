@@ -36,7 +36,8 @@ button { font: inherit; }
 .topbar { height: 82px; display: flex; align-items: center; border-bottom: 1px solid var(--line); position: relative; z-index: 5; background: rgba(8,12,17,.88); backdrop-filter: blur(18px); }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { display: flex; align-items: center; gap: 13px; min-width: max-content; }
-.brand-mark { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid rgba(105,217,245,.65); color: var(--cyan); font-size: 21px; font-weight: 800; letter-spacing: -3px; transform: skew(-7deg); box-shadow: 0 0 24px rgba(105,217,245,.09); }
+.brand-icon { width: 42px; height: 42px; display: block; object-fit: contain; flex: 0 0 auto; }
+.brand-wordmark { display: block; width: 190px; max-width: 24vw; height: 42px; object-fit: contain; object-position: left center; }
 .brand-name { font-size: 13px; font-weight: 800; letter-spacing: .19em; }
 .brand-sub { display: block; color: #8293A3; font-size: 8px; letter-spacing: .42em; margin-top: 4px; text-align: right; }
 .nav-links { display: flex; gap: 32px; align-items: center; color: #B7C2CC; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
@@ -60,7 +61,7 @@ h1 span { color: var(--cyan); }
 .orbit::before,.orbit::after { content: ""; position: absolute; border: 1px solid rgba(105,217,245,.13); border-radius: 50%; }
 .orbit::before { inset: 28px; }
 .orbit::after { inset: 58px; border-style: dashed; opacity: .65; }
-.orbit-core { width: 155px; height: 155px; display: grid; place-items: center; border: 1px solid rgba(105,217,245,.65); color: var(--cyan); font-size: 82px; font-weight: 800; letter-spacing: -13px; padding-right: 12px; transform: skew(-7deg); background: linear-gradient(145deg, #172631, #080D13); box-shadow: 0 0 70px rgba(105,217,245,.18), inset 0 0 35px rgba(105,217,245,.08); }
+.orbit-logo { width: 155px; height: 155px; object-fit: contain; filter: drop-shadow(0 0 24px rgba(105,217,245,.2)); position: relative; z-index: 1; }
 .orbit-label { position: absolute; color: #8DA1B1; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; }
 .orbit-label.one { top: 8%; right: 4%; }
 .orbit-label.two { bottom: 10%; left: -3%; }
@@ -104,14 +105,15 @@ h2 { font-size: clamp(32px, 4vw, 48px); letter-spacing: -.05em; line-height: 1.0
 .contact-row p { color: var(--text-muted); font-size: 13px; margin: 14px 0 0; }
 footer { padding: 28px 0; border-top: 1px solid var(--line); color: #718190; font-size: 10px; letter-spacing: .08em; }
 .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.footer-brand { color: #DCE5EB; font-weight: 750; letter-spacing: .17em; }
+.footer-brand { display: flex; align-items: center; }
+.footer-wordmark { display: block; width: 190px; max-width: 55vw; height: 42px; object-fit: contain; object-position: left center; }
 .footer-note { text-align: right; }
 @media (max-width: 800px) {
  .hero-grid { grid-template-columns: 1fr; gap: 25px; padding: 80px 0 65px; }
  .hero { min-height: auto; }
  .hero-art { min-height: 310px; }
  .orbit { width: 290px; }
- .orbit-core { width: 125px; height: 125px; font-size: 67px; }
+ .orbit-logo { width: 125px; height: 125px; }
  .games-grid { grid-template-columns: 1fr 1fr; }
  .about-grid { grid-template-columns: 1fr; gap: 35px; }
  .section-head { align-items: start; flex-direction: column; }
@@ -119,8 +121,8 @@ footer { padding: 28px 0; border-top: 1px solid var(--line); color: #718190; fon
 @media (max-width: 560px) {
  .container { width: min(100% - 34px, 1160px); }
  .topbar { height: 70px; }
- .brand-mark { width: 37px; height: 37px; }
- .brand-name { font-size: 11px; }
+ .brand-icon { width: 37px; height: 37px; }
+ .brand-wordmark { width: 150px; height: 36px; max-width: 42vw; }
  .menu-button { display: block; }
  .nav-links { display: none; position: absolute; top: 69px; left: 0; right: 0; padding: 22px 24px; background: #0D141D; border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 22px; }
  .nav-links.open { display: flex; }
@@ -144,8 +146,8 @@ footer { padding: 28px 0; border-top: 1px solid var(--line); color: #718190; fon
   <header class="topbar">
     <div class="container nav">
       <a class="brand" href="#home" aria-label="NEXFORGE STUDIOS home">
-        <span class="brand-mark">N</span>
-        <span><span class="brand-name">NEXFORGE</span><span class="brand-sub">STUDIOS</span></span>
+        <img class="brand-icon" src="assets/logo.png" alt="">
+        <img class="brand-wordmark" src="assets/wordmark.png" alt="NEXFORGE STUDIOS">
       </a>
       <nav class="nav-links" id="navLinks" aria-label="Main navigation">
         <a href="#games">Games</a><a href="#studio">Studio</a><a href="#philosophy">Our vision</a><a href="#contact">Contact</a>
@@ -163,8 +165,8 @@ footer { padding: 28px 0; border-top: 1px solid var(--line); color: #718190; fon
           <p class="hero-copy">We are NEXFORGE STUDIOS. An independent game studio building memorable worlds, thoughtful gameplay, and experiences made to stay with you.</p>
           <div class="hero-actions"><a class="button-primary" href="#games">Discover our games ↗</a><a class="text-link" href="#studio">Meet the studio ↓</a></div>
         </div>
-        <div class="hero-art" aria-label="NEXFORGE geometric N emblem">
-          <div class="orbit"><span class="orbit-label one">Built with purpose</span><span class="orbit-label two">Driven by imagination</span><span class="orbit-dot a"></span><span class="orbit-dot b"></span><div class="orbit-core">N</div></div>
+        <div class="hero-art" aria-label="NEXFORGE logo">
+          <div class="orbit"><span class="orbit-label one">Built with purpose</span><span class="orbit-label two">Driven by imagination</span><span class="orbit-dot a"></span><span class="orbit-dot b"></span><img class="orbit-logo" src="assets/logo.png" alt="NEXFORGE logo"></div>
         </div>
       </div>
     </section>
@@ -198,7 +200,7 @@ footer { padding: 28px 0; border-top: 1px solid var(--line); color: #718190; fon
     <section class="manifesto" id="philosophy"><div class="container"><p>Our philosophy</p><h2>Make it meaningful.<br><span>Make it unforgettable.</span></h2></div></section>
     <section class="section contact" id="contact"><div class="container contact-row"><div><div class="section-kicker">Start a conversation</div><h2>Have a world to build?</h2><p>For collaborations, publishing enquiries, or studio updates, get in touch.</p></div><a class="button-primary" href="mailto:hello@nexforgestudios.com?subject=Studio%20Enquiry">Contact the studio ↗</a></div></section>
   </main>
-  <footer><div class="container footer-row"><div><div class="footer-brand">NEXFORGE STUDIOS</div><div style="margin-top:8px">© <span id="year">2026</span> NEXFORGE STUDIOS. All rights reserved.</div></div><div class="footer-note">FORGE WORLDS. CREATE LEGENDS.</div></div></footer>
+  <footer><div class="container footer-row"><div><div class="footer-brand"><img class="footer-wordmark" src="assets/wordmark.png" alt="NEXFORGE STUDIOS"></div><div style="margin-top:8px">© <span id="year">2026</span> NEXFORGE STUDIOS. All rights reserved.</div></div><div class="footer-note">FORGE WORLDS. CREATE LEGENDS.</div></div></footer>
 </div>
 <script>
 const menuButton = document.getElementById('menuButton');
