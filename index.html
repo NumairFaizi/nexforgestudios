@@ -1,219 +1,1211 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="NEXFORGE STUDIOS — independent game development. Forge Worlds. Create Legends.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NEXFORGE STUDIOS — Independent game development. Forge Worlds. Create Legends.">
 <title>NEXFORGE STUDIOS — Forge Worlds. Create Legends.</title>
+
 <style>
 :root {
-  --site-primary: #111820;
-  --site-on-primary: #F4F7FA;
-  --site-secondary: #B7C6D2;
-  --site-on-secondary: #101820;
-  --site-background: #080C11;
-  --site-on-background: #F2F5F8;
-  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --site-font-heading: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --site-heading-scale: 1;
-  --site-spacing-scale: 1;
-  --site-radius-scale: 1;
-  --site-decoration-opacity: 1;
-  --surface: #0D131B;
-  --surface-raised: #121B25;
-  --text-muted: #9AA9B8;
-  --line: rgba(190,211,228,.15);
-  --cyan: #69D9F5;
-  --cyan-soft: rgba(105,217,245,.12);
+    --cyan: #69D9F5;
+    --cyan-glow: rgba(105,217,245,.25);
+    --background: #080C11;
+    --surface: #0D131B;
+    --surface-raised: #121B25;
+    --white: #F2F5F8;
+    --muted: #9AA9B8;
+    --line: rgba(190,211,228,.15);
+    --font: Inter, system-ui, -apple-system, sans-serif;
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); }
-#app { min-height: 100vh; width: 100%; border-radius: 0; overflow: hidden; background-color: var(--site-background); color: var(--site-on-background); position: relative; }
-a { color: inherit; text-decoration: none; }
-button { font: inherit; }
-.container { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
-.topbar { height: 82px; display: flex; align-items: center; border-bottom: 1px solid var(--line); position: relative; z-index: 5; background: rgba(8,12,17,.88); backdrop-filter: blur(18px); }
-.nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.brand { display: flex; align-items: center; gap: 13px; min-width: max-content; }
-.brand-icon { width: 42px; height: 42px; display: block; object-fit: contain; flex: 0 0 auto; }
-.brand-wordmark { display: block; width: 190px; max-width: 24vw; height: 42px; object-fit: contain; object-position: left center; }
-.brand-name { font-size: 13px; font-weight: 800; letter-spacing: .19em; }
-.brand-sub { display: block; color: #8293A3; font-size: 8px; letter-spacing: .42em; margin-top: 4px; text-align: right; }
-.nav-links { display: flex; gap: 32px; align-items: center; color: #B7C2CC; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-.nav-links a:hover, .text-link:hover { color: var(--cyan); }
-.nav-cta, .button-primary { border: 1px solid rgba(105,217,245,.55); color: var(--cyan); padding: 12px 17px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; background: rgba(105,217,245,.06); transition: .2s ease; }
-.nav-cta:hover, .button-primary:hover { background: var(--cyan); color: #071016; box-shadow: 0 0 28px rgba(105,217,245,.2); }
-.menu-button { display: none; color: var(--site-on-background); border: 1px solid var(--line); background: transparent; padding: 9px 12px; }
-.hero { min-height: 670px; display: grid; align-items: center; position: relative; isolation: isolate; border-bottom: 1px solid var(--line); }
-.hero::before { content: ""; position: absolute; z-index: -1; inset: 0; opacity: var(--site-decoration-opacity); background: radial-gradient(ellipse at 75% 44%, rgba(35,126,158,.20), transparent 37%), linear-gradient(110deg, transparent 35%, rgba(105,217,245,.035) 70%, transparent); }
-.hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: center; padding: 95px 0 110px; }
-.eyebrow { color: var(--cyan); font-size: 10px; letter-spacing: .28em; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
-.eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--cyan); }
-h1,h2,h3,p { margin-top: 0; }
-h1 { font-family: var(--site-font-heading); font-size: clamp(46px, 6.5vw, 82px); line-height: .98; letter-spacing: -.065em; margin: 25px 0 25px; font-weight: 750; }
-h1 span { color: var(--cyan); }
-.hero-copy { color: #A8B5C0; max-width: 520px; font-size: 15px; line-height: 1.85; }
-.hero-actions { display: flex; align-items: center; gap: 24px; margin-top: 36px; flex-wrap: wrap; }
-.text-link { font-size: 11px; color: #C4D0D9; letter-spacing: .12em; text-transform: uppercase; }
-.hero-art { min-height: 390px; display: grid; place-items: center; position: relative; }
-.orbit { width: min(370px, 75vw); aspect-ratio: 1; border: 1px solid rgba(105,217,245,.18); border-radius: 50%; display: grid; place-items: center; position: relative; box-shadow: 0 0 100px rgba(42,155,190,.08), inset 0 0 80px rgba(42,155,190,.04); }
-.orbit::before,.orbit::after { content: ""; position: absolute; border: 1px solid rgba(105,217,245,.13); border-radius: 50%; }
-.orbit::before { inset: 28px; }
-.orbit::after { inset: 58px; border-style: dashed; opacity: .65; }
-.orbit-logo { width: 155px; height: 155px; object-fit: contain; filter: drop-shadow(0 0 24px rgba(105,217,245,.2)); position: relative; z-index: 1; }
-.orbit-label { position: absolute; color: #8DA1B1; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; }
-.orbit-label.one { top: 8%; right: 4%; }
-.orbit-label.two { bottom: 10%; left: -3%; }
-.orbit-dot { position: absolute; width: 7px; height: 7px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 16px var(--cyan); }
-.orbit-dot.a { top: 17%; left: 20%; }.orbit-dot.b { right: 12%; bottom: 24%; }
-.section { padding: 105px 0; }
-.section-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 42px; }
-.section-kicker { color: var(--cyan); font-size: 10px; letter-spacing: .25em; text-transform: uppercase; margin-bottom: 15px; }
-h2 { font-size: clamp(32px, 4vw, 48px); letter-spacing: -.05em; line-height: 1.08; margin-bottom: 0; }
-.section-intro { color: var(--text-muted); max-width: 380px; font-size: 13px; line-height: 1.8; margin-bottom: 3px; }
-.games-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-.game-card { border: 1px solid var(--line); background: linear-gradient(160deg, var(--surface-raised), var(--surface)); min-height: 390px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform .25s ease, border-color .25s ease; }
-.game-card:hover { transform: translateY(-5px); border-color: rgba(105,217,245,.45); }
-.game-visual { min-height: 205px; display: grid; place-items: center; position: relative; overflow: hidden; background: #101A24; }
-.game-visual::before { content: ""; position: absolute; width: 230px; height: 230px; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; box-shadow: 0 0 0 22px rgba(255,255,255,.025), 0 0 0 48px rgba(255,255,255,.018); }
-.game-visual.garden { background: radial-gradient(circle at 50% 45%, #2d5c4d, #142B2B 60%, #0C171D); }
-.game-visual.arrows { background: radial-gradient(circle at 50% 50%, #263D57, #111B2A 68%, #0C111A); }
-.game-visual.city { background: radial-gradient(circle at 50% 80%, #5A342A, #20202B 48%, #0B1018); }
-.game-symbol { position: relative; z-index: 1; font-size: 76px; filter: drop-shadow(0 12px 24px rgba(0,0,0,.35)); }
-.game-visual.city .game-symbol { font-size: 61px; letter-spacing: -.12em; font-weight: 900; color: #E4B18A; }
-.game-visual.arrows .game-symbol { color: #9ADCF0; font-size: 88px; }
-.game-content { padding: 25px 25px 23px; display: flex; flex-direction: column; flex: 1; }
-.game-status { color: var(--cyan); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 12px; }
-.game-content h3 { font-size: 21px; letter-spacing: -.035em; margin-bottom: 10px; }
-.game-content p { color: var(--text-muted); font-size: 12px; line-height: 1.7; margin-bottom: 22px; }
-.game-foot { margin-top: auto; padding-top: 15px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; color: #B8C5CE; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
-.game-foot span:last-child { color: var(--cyan); }
-.about { background: #0B1118; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.about-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 90px; align-items: start; }
-.about-copy { color: #A8B5C0; font-size: 14px; line-height: 1.9; }
-.values { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 36px; }
-.value { border-top: 1px solid var(--line); padding-top: 17px; }
-.value strong { display: block; color: #EAF2F7; font-size: 12px; margin-bottom: 8px; letter-spacing: .04em; }
-.value span { color: var(--text-muted); font-size: 11px; line-height: 1.7; }
-.manifesto { padding: 80px 0; text-align: center; }
-.manifesto p { color: var(--text-muted); font-size: 10px; letter-spacing: .25em; text-transform: uppercase; margin-bottom: 20px; }
-.manifesto h2 { font-size: clamp(34px, 5vw, 60px); }
-.manifesto h2 span { color: var(--cyan); }
-.contact { background: linear-gradient(120deg, #111D28, #0C141D); border-top: 1px solid var(--line); }
-.contact-row { display: flex; justify-content: space-between; align-items: center; gap: 35px; }
-.contact-row p { color: var(--text-muted); font-size: 13px; margin: 14px 0 0; }
-footer { padding: 28px 0; border-top: 1px solid var(--line); color: #718190; font-size: 10px; letter-spacing: .08em; }
-.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.footer-brand { display: flex; align-items: center; }
-.footer-wordmark { display: block; width: 190px; max-width: 55vw; height: 42px; object-fit: contain; object-position: left center; }
-.footer-note { text-align: right; }
-@media (max-width: 800px) {
- .hero-grid { grid-template-columns: 1fr; gap: 25px; padding: 80px 0 65px; }
- .hero { min-height: auto; }
- .hero-art { min-height: 310px; }
- .orbit { width: 290px; }
- .orbit-logo { width: 125px; height: 125px; }
- .games-grid { grid-template-columns: 1fr 1fr; }
- .about-grid { grid-template-columns: 1fr; gap: 35px; }
- .section-head { align-items: start; flex-direction: column; }
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-@media (max-width: 560px) {
- .container { width: min(100% - 34px, 1160px); }
- .topbar { height: 70px; }
- .brand-icon { width: 37px; height: 37px; }
- .brand-wordmark { width: 150px; height: 36px; max-width: 42vw; }
- .menu-button { display: block; }
- .nav-links { display: none; position: absolute; top: 69px; left: 0; right: 0; padding: 22px 24px; background: #0D141D; border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 22px; }
- .nav-links.open { display: flex; }
- .nav-cta { display: none; }
- h1 { font-size: clamp(44px, 13vw, 66px); }
- .hero-copy { font-size: 13px; }
- .section { padding: 75px 0; }
- .games-grid { grid-template-columns: 1fr; }
- .game-card { min-height: 360px; }
- .values { gap: 20px; }
- .contact-row, .footer-row { align-items: flex-start; flex-direction: column; }
- .footer-note { text-align: left; }
+
+html {
+    scroll-behavior: smooth;
 }
-@media (prefers-color-scheme: light) {
- :root { --site-background: #080C11; --site-on-background: #F2F5F8; }
+
+body {
+    background: var(--background);
+    color: var(--white);
+    font-family: var(--font);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+.container {
+    width: min(1160px, calc(100% - 48px));
+    margin: auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.topbar {
+    height: 82px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,17,.94);
+    backdrop-filter: blur(18px);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: max-content;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.brand-wordmark {
+    width: 190px;
+    max-width: 24vw;
+    height: 42px;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    color: #B7C2CC;
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.nav-links a {
+    transition: .2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--cyan);
+}
+
+.nav-cta,
+.button-primary {
+    border: 1px solid rgba(105,217,245,.55);
+    color: var(--cyan);
+    padding: 12px 17px;
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: rgba(105,217,245,.06);
+    transition: .25s;
+}
+
+.nav-cta:hover,
+.button-primary:hover {
+    background: var(--cyan);
+    color: #071016;
+    box-shadow: 0 0 28px var(--cyan-glow);
+}
+
+.menu-button {
+    display: none;
+    color: white;
+    border: 1px solid var(--line);
+    background: transparent;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 620px;
+    display: grid;
+    align-items: center;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background:
+        radial-gradient(
+            ellipse at 75% 44%,
+            rgba(35,126,158,.22),
+            transparent 38%
+        ),
+        linear-gradient(
+            110deg,
+            transparent 35%,
+            rgba(105,217,245,.035) 70%,
+            transparent
+        );
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 60px;
+    align-items: center;
+    padding: 90px 0;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 35px;
+    height: 1px;
+    background: var(--cyan);
+}
+
+h1 {
+    font-size: clamp(46px, 6.5vw, 82px);
+    line-height: .98;
+    letter-spacing: -.065em;
+    margin: 25px 0;
+    font-weight: 800;
+}
+
+h1 span {
+    color: var(--cyan);
+    text-shadow: 0 0 35px rgba(105,217,245,.2);
+}
+
+.hero-copy {
+    color: #A8B5C0;
+    max-width: 520px;
+    font-size: 15px;
+    line-height: 1.85;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+}
+
+.text-link {
+    font-size: 11px;
+    color: #C4D0D9;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.text-link:hover {
+    color: var(--cyan);
+}
+
+/* HERO LOGO */
+
+.hero-art {
+    min-height: 390px;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.orbit {
+    width: min(370px, 75vw);
+    aspect-ratio: 1;
+    border: 1px solid rgba(105,217,245,.2);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    position: relative;
+    box-shadow:
+        0 0 100px rgba(42,155,190,.08),
+        inset 0 0 80px rgba(42,155,190,.04);
+}
+
+.orbit::before,
+.orbit::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(105,217,245,.15);
+    border-radius: 50%;
+}
+
+.orbit::before {
+    inset: 28px;
+}
+
+.orbit::after {
+    inset: 58px;
+    border-style: dashed;
+    opacity: .65;
+}
+
+.orbit-logo {
+    width: 155px;
+    height: 155px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 24px rgba(105,217,245,.3));
+    position: relative;
+    z-index: 1;
+}
+
+.orbit-label {
+    position: absolute;
+    color: #8DA1B1;
+    font-size: 9px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+}
+
+.orbit-label.one {
+    top: 8%;
+    right: 4%;
+}
+
+.orbit-label.two {
+    bottom: 10%;
+    left: -3%;
+}
+
+.orbit-dot {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 16px var(--cyan);
+}
+
+.orbit-dot.a {
+    top: 17%;
+    left: 20%;
+}
+
+.orbit-dot.b {
+    right: 12%;
+    bottom: 24%;
+}
+
+/* =========================
+   GENERAL SECTIONS
+========================= */
+
+.section {
+    padding: 100px 0;
+}
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 30px;
+    margin-bottom: 42px;
+}
+
+.section-kicker {
+    color: var(--cyan);
+    font-size: 10px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    letter-spacing: -.05em;
+    line-height: 1.08;
+}
+
+.section-intro {
+    color: var(--muted);
+    max-width: 380px;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* =========================
+   FLOW GARDEN GAME
+========================= */
+
+.games-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.game-card {
+    display: grid;
+    grid-template-columns: 1.08fr .92fr;
+    border: 1px solid var(--line);
+    background: linear-gradient(
+        150deg,
+        var(--surface-raised),
+        var(--surface)
+    );
+    min-height: 390px;
+    overflow: hidden;
+    transition: .3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(105,217,245,.5);
+    box-shadow: 0 15px 50px rgba(0,180,230,.08);
+}
+
+.game-visual {
+    min-height: 390px;
+    overflow: hidden;
+    background: #142B2B;
+}
+
+.game-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 390px;
+    object-fit: cover;
+    transition: transform .5s ease;
+}
+
+.game-card:hover .game-visual img {
+    transform: scale(1.04);
+}
+
+.game-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.game-status {
+    color: var(--cyan);
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+.game-status::before {
+    content: "●";
+    margin-right: 9px;
+}
+
+.game-content h3 {
+    font-size: clamp(30px, 4vw, 46px);
+    letter-spacing: -.04em;
+    margin-bottom: 12px;
+}
+
+.game-tagline {
+    color: var(--cyan);
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.game-content p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.85;
+    margin-bottom: 25px;
+}
+
+.game-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.store-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 7px;
+    padding: 9px 13px;
+    background: #05080B;
+    color: white;
+    font-size: 11px;
+    transition: .2s;
+}
+
+.store-badge:hover {
+    border-color: var(--cyan);
+    transform: translateY(-2px);
+}
+
+.store-badge strong {
+    font-size: 14px;
+    display: block;
+}
+
+.store-badge small {
+    font-size: 8px;
+    display: block;
+    color: #B7C2CC;
+}
+
+.store-icon {
+    font-size: 23px;
+}
+
+.game-link {
+    display: inline-block;
+    width: fit-content;
+    padding: 13px 22px;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    transition: .2s;
+}
+
+.game-link:hover {
+    background: var(--cyan);
+    color: #071016;
+    box-shadow: 0 0 25px var(--cyan-glow);
+}
+
+.game-foot {
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    color: #B8C5CE;
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.game-foot span:last-child {
+    color: var(--cyan);
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about {
+    background: #0B1118;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 90px;
+    align-items: start;
+}
+
+.about-copy {
+    color: #A8B5C0;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 36px;
+}
+
+.value {
+    border-top: 1px solid var(--line);
+    padding-top: 17px;
+}
+
+.value strong {
+    display: block;
+    color: #EAF2F7;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.value span {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* =========================
+   MANIFESTO
+========================= */
+
+.manifesto {
+    padding: 85px 0;
+    text-align: center;
+}
+
+.manifesto p {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.manifesto h2 {
+    font-size: clamp(34px, 5vw, 60px);
+}
+
+.manifesto h2 span {
+    color: var(--cyan);
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact {
+    background: linear-gradient(120deg, #111D28, #0C141D);
+    border-top: 1px solid var(--line);
+}
+
+.contact-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 35px;
+}
+
+.contact-row p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 14px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    color: #718190;
+    font-size: 10px;
+    letter-spacing: .08em;
+}
+
+.footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-wordmark {
+    width: 190px;
+    max-width: 55vw;
+    height: 42px;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.footer-note {
+    text-align: right;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 800px) {
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 75px 0 60px;
+    }
+
+    .hero {
+        min-height: auto;
+    }
+
+    .hero-art {
+        min-height: 310px;
+    }
+
+    .orbit {
+        width: 290px;
+    }
+
+    .orbit-logo {
+        width: 125px;
+        height: 125px;
+    }
+
+    .game-card {
+        grid-template-columns: 1fr;
+    }
+
+    .game-visual,
+    .game-visual img {
+        min-height: 300px;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .section-head {
+        align-items: start;
+        flex-direction: column;
+    }
+}
+
+@media(max-width: 560px) {
+
+    .container {
+        width: min(100% - 34px, 1160px);
+    }
+
+    .topbar {
+        height: 70px;
+    }
+
+    .brand-icon {
+        width: 37px;
+        height: 37px;
+    }
+
+    .brand-wordmark {
+        width: 150px;
+        height: 36px;
+        max-width: 42vw;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 69px;
+        left: 0;
+        right: 0;
+        padding: 22px 24px;
+        background: #0D141D;
+        border-bottom: 1px solid var(--line);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-cta {
+        display: none;
+    }
+
+    h1 {
+        font-size: clamp(44px, 13vw, 66px);
+    }
+
+    .hero-copy {
+        font-size: 13px;
+    }
+
+    .section {
+        padding: 75px 0;
+    }
+
+    .game-visual,
+    .game-visual img {
+        min-height: 220px;
+    }
+
+    .game-content {
+        padding: 24px;
+    }
+
+    .values {
+        gap: 20px;
+    }
+
+    .contact-row,
+    .footer-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .footer-note {
+        text-align: left;
+    }
 }
 </style>
 </head>
+
 <body>
+
 <div id="app">
-  <header class="topbar">
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="topbar">
     <div class="container nav">
-      <a class="brand" href="#home" aria-label="NEXFORGE STUDIOS home">
-        <img class="brand-icon" src="assets/logo.png" alt="">
-        <img class="brand-wordmark" src="assets/wordmark.png" alt="NEXFORGE STUDIOS">
-      </a>
-      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-        <a href="#games">Games</a><a href="#studio">Studio</a><a href="#philosophy">Our vision</a><a href="#contact">Contact</a>
-      </nav>
-      <a class="nav-cta" href="#games">Explore games ↗</a>
-      <button class="menu-button" id="menuButton" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+
+        <a class="brand" href="#home" aria-label="NEXFORGE STUDIOS home">
+            <img class="brand-icon" src="assets/logo.png" alt="">
+            <img class="brand-wordmark" src="assets/wordmark.png" alt="NEXFORGE STUDIOS">
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#home" class="active">Home</a>
+            <a href="#games">Games</a>
+            <a href="#studio">About</a>
+            <a href="#philosophy">Our Vision</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <a class="nav-cta" href="#contact">
+            Follow Us ↗
+        </a>
+
+        <button class="menu-button" id="menuButton"
+                aria-label="Toggle navigation"
+                aria-expanded="false">
+            Menu
+        </button>
+
     </div>
-  </header>
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-grid">
+</header>
+
+<main>
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+
+<section class="hero" id="home">
+
+    <div class="container hero-grid">
+
         <div>
-          <div class="eyebrow">Independent game development</div>
-          <h1>FORGE<br>WORLDS.<br><span>CREATE</span><br>LEGENDS.</h1>
-          <p class="hero-copy">We are NEXFORGE STUDIOS. An independent game studio building memorable worlds, thoughtful gameplay, and experiences made to stay with you.</p>
-          <div class="hero-actions"><a class="button-primary" href="#games">Discover our games ↗</a><a class="text-link" href="#studio">Meet the studio ↓</a></div>
+
+            <div class="eyebrow">
+                Independent Game Studio
+            </div>
+
+            <h1>
+                FORGE<br>
+                WORLDS.<br>
+                <span>CREATE</span><br>
+                <span>LEGENDS.</span>
+            </h1>
+
+            <p class="hero-copy">
+                At <strong>NEXFORGE STUDIOS</strong>, we craft
+                immersive experiences, bring imaginative worlds
+                to life, and build games that players love.
+            </p>
+
+            <div class="hero-actions">
+
+                <a class="button-primary" href="#games">
+                    Explore Our Games &nbsp; →
+                </a>
+
+                <a class="text-link" href="#studio">
+                    Meet The Studio ↓
+                </a>
+
+            </div>
+
         </div>
-        <div class="hero-art" aria-label="NEXFORGE logo">
-          <div class="orbit"><span class="orbit-label one">Built with purpose</span><span class="orbit-label two">Driven by imagination</span><span class="orbit-dot a"></span><span class="orbit-dot b"></span><img class="orbit-logo" src="assets/logo.png" alt="NEXFORGE logo"></div>
+
+        <div class="hero-art">
+
+            <div class="orbit">
+
+                <span class="orbit-label one">
+                    Built With Purpose
+                </span>
+
+                <span class="orbit-label two">
+                    Driven By Imagination
+                </span>
+
+                <span class="orbit-dot a"></span>
+                <span class="orbit-dot b"></span>
+
+                <img
+                    class="orbit-logo"
+                    src="assets/logo.png"
+                    alt="NEXFORGE logo"
+                >
+
+            </div>
+
         </div>
-      </div>
-    </section>
-    <section class="section" id="games">
-      <div class="container">
-        <div class="section-head"><div><div class="section-kicker">The portfolio / 001—003</div><h2>Worlds in the making.</h2></div><p class="section-intro">Different genres. Different journeys. One shared commitment to craft, identity, and play.</p></div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     OUR GAMES
+========================= -->
+
+<section class="section" id="games">
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+                <div class="section-kicker">
+                    The Portfolio / 001
+                </div>
+
+                <h2>Our Games.</h2>
+            </div>
+
+            <p class="section-intro">
+                One world. Growing every day.
+                Discover our first featured mobile game.
+            </p>
+
+        </div>
+
         <div class="games-grid">
-          <article class="game-card">
-            <div class="game-visual garden"><div class="game-symbol">🌱</div></div>
-            <div class="game-content"><div class="game-status">Mobile puzzle · In development</div><h3>Flow Garden</h3><p>A calm, colorful puzzle escape where every move helps a little garden grow. Think ahead, sort the flow, and bring each level to life.</p><div class="game-foot"><span>Android</span><span>Growing soon ↗</span></div></div>
-          </article>
-          <article class="game-card">
-            <div class="game-visual arrows"><div class="game-symbol">↗ ↘</div></div>
-            <div class="game-content"><div class="game-status">Casual puzzle · In development</div><h3>Color Arrow Jam</h3><p>A clean, satisfying logic challenge built around direction, timing, and clever moves. Find the path and clear the jam.</p><div class="game-foot"><span>Mobile</span><span>In the works ↗</span></div></div>
-          </article>
-          <article class="game-card">
-            <div class="game-visual city"><div class="game-symbol">MALEGAON</div></div>
-            <div class="game-content"><div class="game-status">Open-world action · Concept</div><h3>MALEGAON: SHADOWS OF THE CITY</h3><p>An original open-world crime drama inspired by the streets, spirit, and stories of a living Indian city.</p><div class="game-foot"><span>PC / Android vision</span><span>Project 03 ↗</span></div></div>
-          </article>
+
+            <!-- FLOW GARDEN ONLY -->
+
+            <article class="game-card">
+
+                <div class="game-visual">
+
+                    <img
+                        src="assets/flow-garden-banner.png"
+                        alt="Flow Garden game featuring a cute green dinosaur, flowers and a cottage"
+                    >
+
+                </div>
+
+                <div class="game-content">
+
+                    <div class="game-status">
+                        Mobile Game · In Development
+                    </div>
+
+                    <h3>Flow Garden</h3>
+
+                    <div class="game-tagline">
+                        Connect. Grow. Blossom.
+                    </div>
+
+                    <p>
+                        Welcome to Flow Garden, a colorful and relaxing
+                        puzzle adventure.
+
+                        Explore beautiful gardens, solve satisfying
+                        puzzles, and help our adorable little dinosaur
+                        bring every garden to life.
+
+                        Think ahead, sort the flow, and discover
+                        a world full of flowers and fun.
+                    </p>
+
+                    <div class="game-buttons">
+
+                        <a class="store-badge" href="#contact">
+                            <span class="store-icon">▶</span>
+                            <span>
+                                <small>GET IT ON</small>
+                                <strong>Google Play</strong>
+                            </span>
+                        </a>
+
+                        <a class="store-badge" href="#contact">
+                            <span class="store-icon">●</span>
+                            <span>
+                                <small>Download on the</small>
+                                <strong>App Store</strong>
+                            </span>
+                        </a>
+
+                    </div>
+
+                    <a href="#contact" class="game-link">
+                        Learn More &nbsp; →
+                    </a>
+
+                    <div class="game-foot">
+                        <span>Android</span>
+                        <span>Growing Soon ↗</span>
+                    </div>
+
+                </div>
+
+            </article>
+
         </div>
-      </div>
-    </section>
-    <section class="section about" id="studio">
-      <div class="container about-grid">
-        <div><div class="section-kicker">Who we are</div><h2>Small studio.<br>Big imagination.</h2></div>
-        <div><p class="about-copy">NEXFORGE STUDIOS is an independent game development label focused on creating original interactive experiences. From accessible mobile puzzles to ambitious open-world concepts, we believe every game deserves its own identity and a world worth exploring.</p>
-          <div class="values"><div class="value"><strong>Original by design</strong><span>Distinct worlds, characters, mechanics, and visual identities.</span></div><div class="value"><strong>Player-first craft</strong><span>Clear experiences, responsive controls, and meaningful play.</span></div><div class="value"><strong>Built to evolve</strong><span>Scalable ideas shaped through iteration and learning.</span></div><div class="value"><strong>Independent spirit</strong><span>Curiosity, experimentation, and a hands-on approach.</span></div></div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     ABOUT STUDIO
+========================= -->
+
+<section class="section about" id="studio">
+
+    <div class="container about-grid">
+
+        <div>
+
+            <div class="section-kicker">
+                Who We Are
+            </div>
+
+            <h2>
+                Small Studio.<br>
+                Big Imagination.
+            </h2>
+
         </div>
-      </div>
-    </section>
-    <section class="manifesto" id="philosophy"><div class="container"><p>Our philosophy</p><h2>Make it meaningful.<br><span>Make it unforgettable.</span></h2></div></section>
-    <section class="section contact" id="contact"><div class="container contact-row"><div><div class="section-kicker">Start a conversation</div><h2>Have a world to build?</h2><p>For collaborations, publishing enquiries, or studio updates, get in touch.</p></div><a class="button-primary" href="mailto:hello@nexforgestudios.com?subject=Studio%20Enquiry">Contact the studio ↗</a></div></section>
-  </main>
-  <footer><div class="container footer-row"><div><div class="footer-brand"><img class="footer-wordmark" src="assets/wordmark.png" alt="NEXFORGE STUDIOS"></div><div style="margin-top:8px">© <span id="year">2026</span> NEXFORGE STUDIOS. All rights reserved.</div></div><div class="footer-note">FORGE WORLDS. CREATE LEGENDS.</div></div></footer>
+
+        <div>
+
+            <p class="about-copy">
+                NEXFORGE STUDIOS is an independent game development
+                label focused on creating original interactive
+                experiences.
+
+                We believe every game deserves its own identity,
+                memorable gameplay, and a world worth exploring.
+
+                Our goal is to build meaningful experiences
+                that players can enjoy and remember.
+            </p>
+
+            <div class="values">
+
+                <div class="value">
+                    <strong>Original By Design</strong>
+                    <span>
+                        Distinct worlds, characters, mechanics,
+                        and visual identities.
+                    </span>
+                </div>
+
+                <div class="value">
+                    <strong>Player-First Craft</strong>
+                    <span>
+                        Clear experiences, responsive controls,
+                        and meaningful gameplay.
+                    </span>
+                </div>
+
+                <div class="value">
+                    <strong>Built To Evolve</strong>
+                    <span>
+                        Scalable ideas shaped through
+                        iteration and learning.
+                    </span>
+                </div>
+
+                <div class="value">
+                    <strong>Independent Spirit</strong>
+                    <span>
+                        Curiosity, experimentation, and
+                        a hands-on approach.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     OUR VISION
+========================= -->
+
+<section class="manifesto" id="philosophy">
+
+    <div class="container">
+
+        <p>Our Philosophy</p>
+
+        <h2>
+            Make It Meaningful.<br>
+            <span>Make It Unforgettable.</span>
+        </h2>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section class="section contact" id="contact">
+
+    <div class="container contact-row">
+
+        <div>
+
+            <div class="section-kicker">
+                Start A Conversation
+            </div>
+
+            <h2>Have A World To Build?</h2>
+
+            <p>
+                For collaborations, publishing enquiries,
+                or studio updates, get in touch.
+            </p>
+
+        </div>
+
+        <a
+            class="button-primary"
+            href="mailto:hello@nexforgestudios.com?subject=Studio%20Enquiry"
+        >
+            Contact The Studio ↗
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="container footer-row">
+
+        <div>
+
+            <div>
+                <img
+                    class="footer-wordmark"
+                    src="assets/wordmark.png"
+                    alt="NEXFORGE STUDIOS"
+                >
+            </div>
+
+            <div style="margin-top:8px">
+                © <span id="year">2026</span>
+                NEXFORGE STUDIOS.
+                All rights reserved.
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            FORGE WORLDS. CREATE LEGENDS.
+        </div>
+
+    </div>
+
+</footer>
+
 </div>
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
 <script>
-const menuButton = document.getElementById('menuButton');
-const navLinks = document.getElementById('navLinks');
-menuButton.addEventListener('click', () => {
-  const isOpen = navLinks.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(isOpen));
+
+const menuButton = document.getElementById("menuButton");
+const navLinks = document.getElementById("navLinks");
+
+menuButton.addEventListener("click", () => {
+
+    const isOpen = navLinks.classList.toggle("open");
+
+    menuButton.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+    );
+
 });
-navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-  navLinks.classList.remove('open');
-  menuButton.setAttribute('aria-expanded', 'false');
-}));
-document.getElementById('year').textContent = new Date().getFullYear();
+
+navLinks.querySelectorAll("a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        navLinks.classList.remove("open");
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    });
+
+});
+
+// Automatic copyright year
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
 </script>
+
 </body>
 </html>
